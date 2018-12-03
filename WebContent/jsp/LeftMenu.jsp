@@ -1,6 +1,8 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page language="java" contentType="text/html"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Hashtable"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <% String base = (String)application.getAttribute("base"); %>
 <jsp:useBean id="dataManager" scope="application"
   class="eshop.model.DataManager"/>
@@ -19,6 +21,7 @@
 <%
     Hashtable<String, String> categories = dataManager.getCategories();
     Enumeration<String> categoryIds = categories.keys();
+
     while (categoryIds.hasMoreElements()) {
       Object categoryId = categoryIds.nextElement();
       out.println("<p><a href=" + base + "?action=selectCatalog&id="
@@ -26,5 +29,13 @@
         );
       }
   %>
+  <select name="category" id="">
+        <c:forEach items="categories" var="category">
+        <p>${category}</p>
+        <c:out value="category"/>
+      		<option value="category">${category}</option>
+   		</c:forEach>
+  </select>
+
     </div>
   </div>
