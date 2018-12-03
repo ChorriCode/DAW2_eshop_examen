@@ -53,10 +53,13 @@
           </tr>
         </table>
       </form>
+      <p>${error}</p>
 <%
     }
   else {
-    %><p class="error">ERROR: You can't check out an empty shopping cart!</p><% 
+    %><p class="error">ERROR: You can't check out an empty shopping cart!</p>
+    
+    <% 
     }
   %>
   </div>
