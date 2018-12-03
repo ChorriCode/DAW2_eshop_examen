@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html"%>
-
+<%@ page import="java.util.*, eshop.beans.* "%>
 <%
   String base = (String)application.getAttribute("base");
   String imageURL = (String)application.getAttribute("imageURL");
@@ -18,9 +18,12 @@
       
   <div class="cart">
   
-
+	<% 
+	
+	Hashtable<String, CartItem> shoppingCart = (Hashtable<String, CartItem>) session.getAttribute("carrito");
+	if (!shoppingCart.isEmpty()) {%>
     <a class="link2" href="<%=base%>?action=showCart">Show Cart
       <img src="<%=imageURL%>cart.gif" border="0"/></a>
     </div>
-    
+    <%} %>
   </div>
