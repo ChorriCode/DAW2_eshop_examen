@@ -44,7 +44,7 @@
           <td><input type="text" name="ccNumber"/></td>
           </tr>
         <tr>
-          <td>Credit Card Expiry Date:</td>
+          <td>Credit Card Expiry Date: (dd/mm)</td>
           <td><input type="text" name="ccExpiryDate"/></td>
           </tr>
         <tr>

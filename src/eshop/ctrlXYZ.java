@@ -160,10 +160,30 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
 		requestDispatcher.forward(request, response);
 	}
+	
+	// este métdo es muy mejorable, pero siendo un exámen no me puedo entretener a refacorizarlo
 	public boolean validateCreditCard(HttpServletRequest request) {
 		boolean validado = false;
 		String creditCard = request.getParameter("ccNumber");
+		String expiryDateCard = request.getParameter("ccExpiryDate");
+		String[] expiryDateCardArray = expiryDateCard.split("/");
+		
+		try {
+			int day = Integer.parseInt(expiryDateCardArray[0]);
+			int month = Integer.parseInt(expiryDateCardArray[1]);
+			if ((day >= 1 && day <= 30) && (month >= 1 && month <= 12)) {
+				validado = true;
+			} else {
+				request.setAttribute("error", "La tarjeta de crédito tiene la fecha de caducidad errónea");
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			request.setAttribute("error", "La tarjeta de crédito tiene la fecha de caducidad errónea");
+			return false;
+		}
+		
 		if (creditCard.length() != 10) {
+			validado = false;
 			request.setAttribute("error", "La tarjeta de crédito debe contener 10 dígitos");
 		} else {
 			try {
