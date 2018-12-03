@@ -14,10 +14,11 @@ import eshop.beans.CartItem;
 import eshop.model.DataManager;
 import java.util.Hashtable;
 
-public class ShopServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+
+public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	private static final long serialVersionUID = 1L;
 
-	public ShopServlet() {
+	public ctrlXYZ() {
 		super();
 	}
 

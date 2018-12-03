@@ -4,9 +4,9 @@
   <servlet>
     <description>
 		</description>
-    <display-name>ShopServlet</display-name>
-    <servlet-name>ShopServlet</servlet-name>
-    <servlet-class>eshop.ShopServlet</servlet-class>
+    <display-name>ctrlXYZ</display-name>
+    <servlet-name>ctrlXYZ</servlet-name>
+    <servlet-class>eshop.ctrlXYZ</servlet-class>
     <init-param>
       <param-name>base</param-name>
       <param-value>/eshop/shop</param-value>
@@ -33,7 +33,7 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ShopServlet</servlet-name>
+    <servlet-name>ctrlXYZ</servlet-name>
     <url-pattern>/shop/*</url-pattern>
   </servlet-mapping>
 </web-app>
