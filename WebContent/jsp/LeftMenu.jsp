@@ -29,13 +29,8 @@
         );
       }
   %>
-  <select name="category" id="">
-        <c:forEach items="categories" var="category">
-        <p>${category}</p>
-        <c:out value="category"/>
-      		<option value="category">${category}</option>
-   		</c:forEach>
-  </select>
+
+
 
     </div>
   </div>
