@@ -134,6 +134,7 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 				url = base + "Checkout.jsp";
 				break;
 			case "orderConfirmation":
+				validateCreditCard(request);
 				url = base + "OrderConfirmation.jsp";
 				break;
 			case "addItem":
@@ -158,5 +159,21 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 		}
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
 		requestDispatcher.forward(request, response);
+	}
+	public boolean validateCreditCard(HttpServletRequest request) {
+		boolean validado = false;
+		String creditCard = request.getParameter("ccNumber");
+		if (creditCard.length() != 10) {
+			request.setAttribute("error", "La tarjeta de crédito debe contener 10 dígitos");
+		} else {
+			try {
+				int creditCardNumber = Integer.parseInt(creditCard);
+			} catch (NumberFormatException e) {
+				request.setAttribute("error", "La tarjeta de crédito debe contener 10 dígitos numéricos");
+			}
+			
+		}
+		return validado;
+		
 	}
 }
