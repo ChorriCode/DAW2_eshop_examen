@@ -8,6 +8,7 @@
   </head>
 <body>
 <jsp:include page="TopMenu.jsp" flush="true"/>
+<jsp:include page="LeftMenu.jsp" flush="true"/>
 <div class="content">
   <h1>Welcome to e-Shop</h1>
   </div>

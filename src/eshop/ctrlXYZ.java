@@ -1,6 +1,10 @@
 package eshop;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -13,6 +17,7 @@ import eshop.beans.Book;
 import eshop.beans.CartItem;
 import eshop.model.DataManager;
 import java.util.Hashtable;
+import java.util.List;
 
 
 public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
@@ -72,6 +77,10 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 		try {
 			String bookId = request.getParameter("bookId");
 			String quantity = request.getParameter("quantity");
+			// controlamos que no hayan valores negativos en la cantidad de libros a añadir al pedido
+			if (Integer.parseInt(quantity) < 0) {
+				quantity = "0";
+			}
 			CartItem item = shoppingCart.get(bookId);
 			if (item != null) {
 				item.setQuantity(quantity);
@@ -115,6 +124,7 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 		String action = request.getParameter("action");
 		// recuperar datamanager del contexto
 		DataManager datamanager = (DataManager) request.getServletContext().getAttribute("dataManager");
+		System.out.println("action: " + action);
 		if (action != null) {
 			switch (action) {
 			case "showCart":
@@ -140,17 +150,18 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 			case "addItem":
 				addItem(request, datamanager);
 				url = base + "ShoppingCart.jsp";
-
 				break;
 			case "updateItem":
 				updateItem(request, datamanager);
 				url = base + "ShoppingCart.jsp";
-
 				break;
 			case "deleteItem":
 				deleteItem(request, datamanager);
 				url = base + "ShoppingCart.jsp";
-
+				break;
+			case "login":
+				String ruta = checkLogin(request, datamanager);
+				url = base + ruta;
 				break;
 
 			// objetivo 5. Controlar funcionalidad del login
@@ -161,6 +172,28 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 		requestDispatcher.forward(request, response);
 	}
 	
+	private String checkLogin(HttpServletRequest request, DataManager datamanager) {
+		String user = request.getParameter("user");
+		String password = request.getParameter("password");
+		PreparedStatement ps;
+		try {
+			ps = datamanager.getConnection().prepareStatement("SELECT * FROM usuarios WHERE usuario = ? AND clave = ?");
+			ps.setString(1, user);
+			ps.setString(2, password);
+			ResultSet result = ps.executeQuery();
+			// si el resulset devuelve una coincidencia con el siguiente if lo validamos y redirigimos a la página que tiene
+			// el menú lateral, en caso contrario abajo devolvemos a index.jsp que es donde está el login
+			if (result.next()) {
+				return "index2.jsp";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("error", "Usuario y/o clave erróneo");
+		return "index.jsp";
+	}
+
 	// este métdo es muy mejorable, pero siendo un exámen no me puedo entretener a refacorizarlo
 	public boolean validateCreditCard(HttpServletRequest request) {
 		boolean validado = false;
@@ -197,4 +230,14 @@ public class ctrlXYZ extends javax.servlet.http.HttpServlet implements javax.ser
 		return validado;
 		
 	}
+	
+	// lo dejo a medias no me dio tiempo
+	 public List authenticate(String user, String password, DataManager dataManager) throws Exception {
+		 PreparedStatement ps = dataManager.getConnection().prepareStatement("SELECT * FROM Cliente WHERE LOGIN_USUARIO = ? AND LOGIN_CLAVE = ?");
+		 ps.setString(1, user);
+		 ps.setString(2, password);
+		 
+		 
+	        return null;
+	 }
 }

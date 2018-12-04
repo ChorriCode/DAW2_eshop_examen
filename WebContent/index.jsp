@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%
-		response.sendRedirect("shop");
+		response.sendRedirect("ctrlXYZ");
 	%>
 </body>
 </html>

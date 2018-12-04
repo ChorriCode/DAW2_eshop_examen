@@ -9,7 +9,7 @@
     <servlet-class>eshop.ctrlXYZ</servlet-class>
     <init-param>
       <param-name>base</param-name>
-      <param-value>/eshop/shop</param-value>
+      <param-value>/eshop/ctrlXYZ</param-value>
     </init-param>
     <init-param>
       <param-name>imageURL</param-name>
@@ -34,6 +34,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ctrlXYZ</servlet-name>
-    <url-pattern>/shop/*</url-pattern>
+    <url-pattern>/ctrlXYZ/*</url-pattern>
   </servlet-mapping>
 </web-app>
